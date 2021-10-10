@@ -1,0 +1,1 @@
+This file created with the purpose of denying upload empty folder on GitHub

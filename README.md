@@ -17,7 +17,7 @@ This project has 3 main parts:
 3. [Implementing DeepSORT algorithm for counting vehicles](#implementing-deepsort-algorithm-for-counting-vehicles)
 
 ## Preparing data
-![https://colab.research.google.com/drive/1Iur7UE3i2fV3Ka3Zw3Owqq2Y2d1MIhCE?usp=sharing](https://colab.research.google.com/assets/colab-badge.svg)
+[![Preparing data notebook](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Iur7UE3i2fV3Ka3Zw3Owqq2Y2d1MIhCE?usp=sharing)
 
 I splitted my data into 2 scenes: `daytime` and `nighttime`, and training 8 classes (4 classes each scene, which are `motorbike, car, bus, truck`).
 
@@ -34,14 +34,14 @@ If you prepare your own data, remember your annotation files fit this format:
   ...
   ```
 ## Training model using YOLOv4
-![https://colab.research.google.com/drive/1Q75vbva305OQ8Dg60WpJwpXjwFO_qwWA?usp=sharing](https://colab.research.google.com/assets/colab-badge.svg)
+[![Training model notebook](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Q75vbva305OQ8Dg60WpJwpXjwFO_qwWA?usp=sharing)
 
 >Training model on your local computer is really complicated in environment installation and slow if you don't have a powerful GPU. In this case, I used **Google Colab**.
 
 Read more: [Testing your trained model on local machine with OpenCV](./utils-obj-detection)
 
 ## Implementing DeepSORT algorithm for counting vehicles
-![https://colab.research.google.com/drive/1uTWscUDaqieHrNtg9puUuQqgs1w5WFtW?usp=sharing](https://colab.research.google.com/assets/colab-badge.svg)
+[![Implementing DeepSORT notebook](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1uTWscUDaqieHrNtg9puUuQqgs1w5WFtW?usp=sharing)
 
 First, setting up environment on your machine:
 ### Conda (Recommended)

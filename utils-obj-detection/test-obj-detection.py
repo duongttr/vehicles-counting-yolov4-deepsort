@@ -5,15 +5,15 @@ import numpy as np
 settings = {
     'labels': 'yolo/obj.names',
     'cfg': 'yolo/yolov4-custom.cfg',
-    'weight': 'yolo/ylov4_final.weights'
+    'weight': 'yolo/yolov4_final.weights'
 }
 
 vd = VehicleDetection(settings)
 
 # Input your image path
-img_path = './test.jpeg'
+img_path = './test6.jpeg'
 
-(img_new, _, _, _) = vd1.detect_image(img_path,
+(img_new, _, _, _) = vd.detect_image(img_path,
                 is_returned_image=True)
 
 cv2.imshow('result',  img_new)

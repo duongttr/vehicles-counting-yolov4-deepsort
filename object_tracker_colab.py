@@ -449,7 +449,11 @@ class VehiclesCounting():
             result = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
 
             if not self._dont_show:
-                cv2.imshow(self._cam_name, result)
+                fr = cv2.resize(result, (512, int(512/result.shape[1] * result.shape[0])))
+                _, buffer = cv2.imencode('.jpeg', fr)
+                fr = buffer.tobytes()
+                yield (b'--frame\r\n'
+                           b'Content-Type: image/jpeg\r\n\r\n' + fr + b'\r\n')  # concat frame one by one and show result
 
 
             # if output flag is set, save video file

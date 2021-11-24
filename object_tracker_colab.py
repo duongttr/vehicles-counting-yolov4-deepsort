@@ -39,10 +39,10 @@ import pafy
 
 
 class VehiclesCounting():
-    def __init__(self, cam_name, framework='tf', weights='./checkpoints/yolov4-416',
+    def __init__(self, file_counter_log_name='LOG', framework='tf', weights='./checkpoints/yolov4-416',
                 size=416, tiny=False, model='yolov4', video='./data/videos/cam0.mp4',
                 output=None, output_format='XVID', iou=0.45, score=0.5,
-                dont_show=False, info=False, count=False,
+                dont_show=False, info=False,
                 detect_line_position=0.5, detect_line_angle=0):
         '''- cam_name: input your camera name
         - framework: choose your model framework (tf, tflite, trt)
@@ -61,7 +61,7 @@ class VehiclesCounting():
         - detect_line_position: (0..1) of height of video frame.
         - detect_line_angle: (0..180) degrees of detect line
         '''
-        self._cam_name = cam_name
+        self._file_counter_log_name = file_counter_log_name
         self._framework = framework
         self._weights = weights
         self._size = size
@@ -74,7 +74,6 @@ class VehiclesCounting():
         self._score = score
         self._dont_show = dont_show
         self._info = info
-        self._count = count
         self._detect_line_position = detect_line_position
         self._detect_line_angle = detect_line_angle
 
@@ -397,14 +396,14 @@ class VehiclesCounting():
                     if current_minute % write_interval == 0:  # write to file once only every write_interval minutes
                         if current_minute not in count_dict:
                             count_dict[current_minute] = True
-                            total_filename = 'Total counts for {}, {}.txt'.format(current_date, self._cam_name)
+                            total_filename = 'Total counts for {}, {}.txt'.format(current_date, self._file_counter_log_name)
                             counts_folder = './counts/'
                             if not os.access(counts_folder + str(current_date) + '/total', os.W_OK):
                                 os.makedirs(counts_folder + str(current_date) + '/total')
                             total_count_file = open(counts_folder + str(current_date) + '/total/' + total_filename, 'a')
                             print('{} writing...'.format(rounded_now))
                             print('Writing current total count ({}) and directional counts to file.'.format(total_counter))
-                            total_count_file.write('{}, {}, {}, {}, {}\n'.format(str(rounded_now), self._cam_name,
+                            total_count_file.write('{}, {}, {}, {}, {}\n'.format(str(rounded_now), self._file_counter_log_name,
                                                                                 str(total_counter), up_count, down_count))
                             total_count_file.close()
 
@@ -415,16 +414,16 @@ class VehiclesCounting():
                             for cls in class_counter:
                                 class_count = class_counter[cls]
                                 print('Writing current {} count ({}) to file.'.format(cls, class_count))
-                                class_filename = 'Class counts for {}, {}.txt'.format(current_date, self._cam_name)
+                                class_filename = 'Class counts for {}, {}.txt'.format(current_date, self._file_counter_log_name)
                                 class_count_file = open(counts_folder + str(current_date) + '/classes/' + class_filename, 'a')
-                                class_count_file.write("{}, {}, {}\n".format(rounded_now, self._cam_name, str(class_count)))
+                                class_count_file.write("{}, {}, {}\n".format(rounded_now, self._file_counter_log_name, str(class_count)))
                                 class_count_file.close()
 
                             # write intersection details
                             if not os.access(counts_folder + str(current_date) + '/intersections', os.W_OK):
                                 os.makedirs(counts_folder + str(current_date) + '/intersections')
-                            print('Writing intersection details for {}'.format(self._cam_name))
-                            intersection_filename = 'Intersection details for {}, {}.txt'.format(current_date, self._cam_name)
+                            print('Writing intersection details for {}'.format(self._file_counter_log_name))
+                            intersection_filename = 'Intersection details for {}, {}.txt'.format(current_date, self._file_counter_log_name)
                             intersection_file = open(counts_folder + str(current_date) + '/intersections/' + intersection_filename, 'a')
                             for i in intersect_info:
                                 cls = i[0]
@@ -437,7 +436,7 @@ class VehiclesCounting():
 
                                 intersect_time = i[3]
 
-                                intersection_file.write("{}, {}, {}, {}, {}, {}\n".format(str(intersect_time), self._cam_name, cls,
+                                intersection_file.write("{}, {}, {}, {}, {}, {}\n".format(str(intersect_time), self._file_counter_log_name, cls,
                                                                                         x, y, str(angle)))
                             intersection_file.close()
                             intersect_info = []  # reset list after writing

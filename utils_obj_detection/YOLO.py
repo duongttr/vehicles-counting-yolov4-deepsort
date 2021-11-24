@@ -4,7 +4,7 @@ import cv2
 from FormatConverter import LTWH2YOLOv4Format as converter
 import os
 
-class VehicleDetection:
+class YOLO:
     def __init__(self, yolo):
         self.LABELS = open(yolo['labels']).read().strip().split('\n')
         self.COLORS = np.random.uniform(0, 255, size=(len(self.LABELS), 3))

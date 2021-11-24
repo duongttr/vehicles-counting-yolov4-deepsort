@@ -4,17 +4,19 @@
 <p align="center">A project for counting vehicles using <code>YOLOv4</code> for training, <code>DeepSORT</code> for tracking, <code>Flask</code> for deploying to web (watch result purpose only) and <code>Ngrok</code> for public IP address </p>
 <p align="center"><img src="./data/images/result.gif"/></p>
 
-### References
-I want to give my big thanks to all of these authors' repo:
-- [yolov4-deepsort](https://github.com/theAIGuysCode/yolov4-deepsort)
-- [
-Multi-Camera-Live-Object-Tracking](https://github.com/LeonLok/Multi-Camera-Live-Object-Tracking)
-
 ## Getting Started
 This project has 3 main parts:
 1. [Preparing data](#preparing-data)
 2. [Training model using the power of YOLOv4](#training-model-using-yolov4)
 3. [Implementing DeepSORT algorithm for counting vehicles](#implementing-deepsort-algorithm-for-counting-vehicles)
+
+### Shortcuts
+
+|Shortcuts|Links|
+|:--:|:--:|
+|📕 Colab notebooks|[Part 1](https://colab.research.google.com/drive/1Iur7UE3i2fV3Ka3Zw3Owqq2Y2d1MIhCE?usp=sharing), [Part 2](https://colab.research.google.com/drive/1Q75vbva305OQ8Dg60WpJwpXjwFO_qwWA?usp=sharing), [Part 3](https://colab.research.google.com/drive/1uTWscUDaqieHrNtg9puUuQqgs1w5WFtW?usp=sharing)|
+|📀 Datasets|[Daytime](https://drive.google.com/file/d/1-0uB5mV7w14YVB96XM2q68m20WPjceP0/view?usp=sharing), [Nighttime](https://drive.google.com/file/d/1aO_zCJebLAlRvpVarFjewmeli2at5tw-/view?usp=sharing)|
+|🚂 My pre-trained model|[GGDrive Mirror](https://drive.google.com/file/d/1-0lo7naWZUhTzJ94Yn4flSG7PSGR3ZZn/view?usp=sharing) (Works well in well-lit conditions)|
 
 ## Preparing data
 [![Preparing data notebook](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Iur7UE3i2fV3Ka3Zw3Owqq2Y2d1MIhCE?usp=sharing)
@@ -36,7 +38,7 @@ If you prepare your own data, remember your annotation files fit this format:
 ## Training model using YOLOv4
 [![Training model notebook](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Q75vbva305OQ8Dg60WpJwpXjwFO_qwWA?usp=sharing)
 
->Training model on your local computer is really complicated in environment installation and slow if you don't have a powerful GPU. In this case, I used **Google Colab**.
+>Training model on your local computer is really complicated in environment installation and slow-like-a-snail if you don't have a powerful GPU. In this case, I used **Google Colab**.
 
 Read more: [Testing your trained model on local machine with OpenCV](./utils-obj-detection)
 
@@ -87,27 +89,19 @@ Import `VehiclesCounting` class in `object_tracker.py` file and using `run()` to
 ```python
 # Import this main file
 from object_tracker import VehiclesCounting
-```
-```python
+
 # Initialize
-vc = VehiclesCounting(cam_name,
-framework='tf', 
-weights='./checkpoints/yolov4-416', 
-size=416, 
-tiny=False, 
-model='yolov4', 
-video='./data/video/test.mp4', 
-output=None, 
-output_format='XVID', 
-iou=0.45, 
-score=0.5, 
-dont_show=False, 
-info=False, 
-count=False,
-detect_line_position=0.5
-detect_line_angle=0)
+# check the list of parameters below to modify values as you want
+# check object_tracker.py file to check the default values
+
+vc = VehiclesCounting()
+
+# Run it
+vc.run()
 ```
-- `cam_name`: input your camera name
+
+`VehicleCounting`'s parameters:
+- `file_counter_log_name`: input your file counter log name
 - `framework`: choose your model framework (tf, tflite, trt)
 - `weights`: path to your .weights
 - `size`: resize images to
@@ -120,18 +114,16 @@ detect_line_angle=0)
 - `score`: score threshold
 - `dont_show`: dont show video output
 - `info`: show detailed info of tracked objects
-- `count`: count objects being tracked on screen
 - `detect_line_position`: (0..1) of height of video frame.
 - `detect_line_angle`: (0..180) degrees of detect line.
-
-```python
-# Run it
-vc.run()
-```
 
 ## Contact me
 - [Facebook](https://www.facebook.com/duonggg.ne/)
 - [LinkedIn](https://www.linkedin.com/in/duonggg/)
-- [Email](mailto:duongdayne1909@gmail.com)
+- [Email](mailto:duong.jt.19@gmail.com)
 
-
+## References
+I want to give my big thanks to all of these authors' repo:
+- [yolov4-deepsort](https://github.com/theAIGuysCode/yolov4-deepsort)
+- [
+Multi-Camera-Live-Object-Tracking](https://github.com/LeonLok/Multi-Camera-Live-Object-Tracking)

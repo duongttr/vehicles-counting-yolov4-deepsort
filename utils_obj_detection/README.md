@@ -8,5 +8,5 @@ python AnnotationGenerator.py -d <path-to-dataset-folder> -c <path-to-cfg-file> 
 ```bash
 python SplitVideoIntoFrame.py -v <path-to-video> -d <path-to-saved-directory> -e <image-extension> -fps <frames-per-second>
 ```
-- `VehicleDetection.py`: mail file for processing detection.
-- `test-obj-detection.py`: test your object detection.
+- `YOLO.py`: main file for processing detection.
+- `run.py`: test your object detection.

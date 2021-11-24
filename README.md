@@ -40,7 +40,7 @@ If you prepare your own data, remember your annotation files fit this format:
 
 >Training model on your local computer is really complicated in environment installation and slow-like-a-snail if you don't have a powerful GPU. In this case, I used **Google Colab**.
 
-Read more: [Testing your trained model on local machine with OpenCV](./utils-obj-detection)
+Read more: [Testing your trained model on local machine with OpenCV](./utils_obj_detection)
 
 ## Implementing DeepSORT algorithm for counting vehicles
 [![Implementing DeepSORT notebook](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1uTWscUDaqieHrNtg9puUuQqgs1w5WFtW?usp=sharing)

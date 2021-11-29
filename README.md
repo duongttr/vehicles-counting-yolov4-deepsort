@@ -11,12 +11,14 @@ This project has 3 main parts:
 3. [Implementing DeepSORT algorithm for counting vehicles](#implementing-deepsort-algorithm-for-counting-vehicles)
 
 ### Shortcuts
-
+Note: For private reason, please ***ask for permission*** before using datasets and pre-trained model!
 |Shortcuts|Links|
 |:--:|:--:|
 |📕 Colab notebooks|[Part 1](https://colab.research.google.com/drive/1Iur7UE3i2fV3Ka3Zw3Owqq2Y2d1MIhCE?usp=sharing), [Part 2](https://colab.research.google.com/drive/1Q75vbva305OQ8Dg60WpJwpXjwFO_qwWA?usp=sharing), [Part 3](https://colab.research.google.com/drive/1uTWscUDaqieHrNtg9puUuQqgs1w5WFtW?usp=sharing)|
-|📀 Datasets|[Daytime](https://drive.google.com/file/d/1-0uB5mV7w14YVB96XM2q68m20WPjceP0/view?usp=sharing), [Nighttime](https://drive.google.com/file/d/1aO_zCJebLAlRvpVarFjewmeli2at5tw-/view?usp=sharing)|
+|📀 Datasets|[Daytime](https://drive.google.com/file/d/1nCo9WVlxucc8C_tpropgvuIAZZ1A9ta9/view?usp=sharing), [Nighttime](https://drive.google.com/file/d/1s8OaXDya2tDjTKl3h3AF6r4uGOSymmNA/view?usp=sharing)|
 |🚂 My pre-trained model|[GGDrive Mirror](https://drive.google.com/file/d/1-0lo7naWZUhTzJ94Yn4flSG7PSGR3ZZn/view?usp=sharing) (Works well in well-lit conditions)|
+
+
 
 ## Preparing data
 [![Preparing data notebook](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Iur7UE3i2fV3Ka3Zw3Owqq2Y2d1MIhCE?usp=sharing)
@@ -24,8 +26,8 @@ This project has 3 main parts:
 I splitted my data into 2 scenes: `daytime` and `nighttime`, and training 8 classes (4 classes each scene, which are `motorbike, car, bus, truck`).
 
 Prepare your own data or **you can download my cleaned data with annotations**:
-- Daytime dataset: [GGDrive mirror](https://drive.google.com/file/d/1-0uB5mV7w14YVB96XM2q68m20WPjceP0/view?usp=sharing)
-- Nighttime dataset: [GGDrive mirror](https://drive.google.com/file/d/1aO_zCJebLAlRvpVarFjewmeli2at5tw-/view?usp=sharing)
+- Daytime dataset: [GGDrive mirror](https://drive.google.com/file/d/1nCo9WVlxucc8C_tpropgvuIAZZ1A9ta9/view?usp=sharing)
+- Nighttime dataset: [GGDrive mirror](https://drive.google.com/file/d/1s8OaXDya2tDjTKl3h3AF6r4uGOSymmNA/view?usp=sharing)
 
 If you prepare your own data, remember your annotation files fit this format:
 

@@ -40,8 +40,7 @@ class YOLO:
         img = cv2.imread(image_path)
         (H, W) = img.shape[:2]
 
-        ln = self.net.getLayerNames()
-        ln = [ln[i[0] - 1] for i in self.net.getUnconnectedOutLayers()]
+        
         blob = cv2.dnn.blobFromImage(img, 1 / 255.0, (416, 416),
                 swapRB=True, crop=False)
         self.net.setInput(blob)

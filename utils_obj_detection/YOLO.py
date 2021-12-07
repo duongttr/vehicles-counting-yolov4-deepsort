@@ -15,9 +15,9 @@ class YOLO:
         self.LABELS = open(labels).read().strip().split('\n')
         self.COLORS = np.random.uniform(0, 255, size=(len(self.LABELS), 3))
         self.net = cv2.dnn.readNetFromDarknet(cfg, weight)
-        self.ln = [self.net.getLayerNames()[i[0] - 1] for i in self.net.getUnconnectedOutLayers()]
+        self.ln = [self.net.getLayerNames()[i - 1] for i in self.net.getUnconnectedOutLayers()]
         # Some OpenCV versions return error at the above line, comment that line and use following
-        # self.ln = [self.net.getLayerNames()[i - 1] for i in self.net.getUnconnectedOutLayers()]
+        # self.ln = [self.net.getLayerNames()[i[0] - 1] for i in self.net.getUnconnectedOutLayers()]
 
         # To use gpu, your machine need to install OpenCV supporting GPU runtime
         # Reading this post for installing on Google Colab:
@@ -40,7 +40,7 @@ class YOLO:
         img = cv2.imread(image_path)
         (H, W) = img.shape[:2]
 
-        
+
         blob = cv2.dnn.blobFromImage(img, 1 / 255.0, (416, 416),
                 swapRB=True, crop=False)
         self.net.setInput(blob)
@@ -85,7 +85,7 @@ class YOLO:
                 (x, y) = (boxes[i][0], boxes[i][1])
                 (w, h) = (boxes[i][2], boxes[i][3])
 
-                result_info.append({'class_id': classIDs[i], 'bbox': [(x/2+w/2)/W, (y/2+h/2)/H, w/W, h/H], 'conf': confidences[i]})
+                result_info.append({'class_id': classIDs[i], 'bbox_2': [(x,y,w,h)], 'bbox': [(x/2+w/2)/W, (y/2+h/2)/H, w/W, h/H], 'conf': confidences[i]})
                 if return_result_image:
                     color = [int(c) for c in self.COLORS[classIDs[i]]]
                     cv2.rectangle(img, (x, y), (x + w, y + h), color, 2)

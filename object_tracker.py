@@ -41,7 +41,7 @@ class VehiclesCounting():
                 size=416, tiny=False, model='yolov4', video='./data/videos/cam0.mp4',
                 output=None, output_format='XVID', iou=0.45, score=0.5,
                 dont_show=False, info=False,
-                detect_line_position=0.5, detect_line_angle=0):
+                detection_line=(0.5,0)):
         '''- cam_name: input your camera name
         - framework: choose your model framework (tf, tflite, trt)
         - weights: path to your .weights
@@ -56,8 +56,9 @@ class VehiclesCounting():
         - dont_show: dont show video output
         - info: show detailed info of tracked objects
         - count: count objects being tracked on screen
-        - detect_line_position: (0..1) of height of video frame.
-        - detect_line_angle: (0..180) degrees of detect line
+        - detection_line: tuple of 2 detection line's parameters (percent_of_height, angle_of_line). 
+        (0..1) of height of video frame.
+        (0..180) degrees of detect line.
         '''
         self._file_counter_log_name = file_counter_log_name
         self._framework = framework
@@ -72,8 +73,8 @@ class VehiclesCounting():
         self._score = score
         self._dont_show = dont_show
         self._info = info
-        self._detect_line_position = detect_line_position
-        self._detect_line_angle = detect_line_angle
+        self._detect_line_position = detection_line[0]
+        self._detect_line_angle = detection_line[1]
 
     def _intersect(self, A, B, C, D):
         return self._ccw(A,C,D) != self._ccw(B, C, D) and self._ccw(A,B,C) != self._ccw(A,B,D)

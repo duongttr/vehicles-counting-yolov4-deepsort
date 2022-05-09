@@ -1,4 +1,3 @@
-import sys
 import os
 # comment out below line to enable tensorflow logging outputs
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -30,7 +29,6 @@ from collections import Counter, deque
 import math
 
 import re
-import pafy
 
 """"
 !python object_tracker.py --video /content/road1.mp4 --output ./outputs/custom3.avi --model yolov4 --dont_show --info
@@ -77,8 +75,6 @@ class VehiclesCounting():
         self._detect_line_position = detect_line_position
         self._detect_line_angle = detect_line_angle
 
-        self._is_ytb_url = re.match(r'^https:\/\/www\.youtube\.com\/watch\?v=.*$', self._video) != None
-
     def _intersect(self, A, B, C, D):
         return self._ccw(A,C,D) != self._ccw(B, C, D) and self._ccw(A,B,C) != self._ccw(A,B,D)
 
@@ -97,6 +93,7 @@ class VehiclesCounting():
         nn_budget = None
         nms_max_overlap = 1.0
         show_detections = False
+
         # initialize deep sort
         model_filename = 'model_data/mars-small128.pb'
         encoder = gdet.create_box_encoder(model_filename, batch_size=1)
@@ -115,10 +112,7 @@ class VehiclesCounting():
         session = InteractiveSession(config=config)
         #STRIDES, ANCHORS, NUM_CLASS, XYSCALE = utils.load_config(FLAGS)
         input_size = self._size
-        if self._is_ytb_url:
-            video_path = pafy.new(self._video).getbest(preftype="mp4").url
-        else:
-            video_path = self._video
+        video_path = self._video
 
         # load tflite model if flag is set
         if self._framework == 'tflite':
@@ -151,17 +145,6 @@ class VehiclesCounting():
             out = cv2.VideoWriter(self._output, codec, fps, (width, height))
 
         frame_num = 0
-        # while video is running
-
-        # get first frame and draw poloygon
-        # return_value, frame = vid.read()
-        # chooser = None
-        # if return_value:
-        #     chooser = RegionChooser(frame)
-        #     chooser.show()
-        # else:
-        #     print('Video has ended or failed, try a different video format!')
-        #     return
         current_date = datetime.datetime.now().date()
         count_dict = {}  # initiate dict for storing counts
 
@@ -186,14 +169,10 @@ class VehiclesCounting():
             frame_num +=1
             print('Frame #: ', frame_num)
             frame_size = frame.shape[:2]
-
-            #image_data = chooser.cut(frame)
-
-            #image_data = cv2.resize(image_data, (input_size, input_size))
+            
             image_data = cv2.resize(frame, (input_size, input_size))
             image_data = image_data / 255.
 
-            #image_data = image_data[702:956, 471:706]
             image_data = image_data[np.newaxis, ...].astype(np.float32)
             start_time = time.time()
 
@@ -266,6 +245,7 @@ class VehiclesCounting():
             if count:
                 cv2.putText(frame, "Objects being tracked: {}".format(count), (5, 35), cv2.FONT_HERSHEY_COMPLEX_SMALL, 2, (0, 255, 0), 2)
                 print("Objects being tracked: {}".format(count))
+            
             # delete detections that are not in allowed_classes
             bboxes = np.delete(bboxes, deleted_indx, axis=0)
             scores = np.delete(scores, deleted_indx, axis=0)
@@ -304,6 +284,7 @@ class VehiclesCounting():
             for track in tracker.tracks:
                 if not track.is_confirmed() or track.time_since_update > 1:
                     continue
+
                 bbox = track.to_tlbr()
                 class_name = track.get_class()
 
@@ -326,7 +307,8 @@ class VehiclesCounting():
                         # draw red line
                         cv2.line(frame, line[0], line[1], (0, 0, 255), 2)
 
-                        already_counted.append(track.track_id)  # Set already counted for ID to true.
+                        # Set already counted for ID to true.
+                        already_counted.append(track.track_id)  
 
                         intersection_time = datetime.datetime.now() - datetime.timedelta(microseconds=datetime.datetime.now().microsecond)
                         angle = self._vector_angle(origin_midpoint, origin_previous_midpoint)
@@ -343,7 +325,7 @@ class VehiclesCounting():
                                 1.5e-3 * frame.shape[0], (0, 0, 255), 2)
 
 
-                if not show_detections:
+                if show_detections:
                     adc = "%.2f" % (track.adc * 100) + "%"  # Average detection confidence
                     cv2.putText(frame, str(class_name), (int(bbox[0]), int(bbox[3])), 0,
                                     1e-3 * frame.shape[0], (0, 255, 0), 2)
